@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+ 
  const MovieView = ({ movie, onBackClick }) =>{
     return(
         < div>
@@ -8,7 +10,7 @@
             <img src={movie.image} alt={movie.title} />
             <div>
                 <span> Genres: </span>
-               { movie.genres.map((genre) => <span> { genre } </span> )}
+               { movie.genres.map((genre) => <span key={genre._id}> { genre.Name } </span> )}
             </div>
             <div>
                 
@@ -23,5 +25,18 @@
     )
     
 }
+
+
+MovieView.propTypes = {
+    movie: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      author: PropTypes.string,
+      genre: PropTypes.shape({
+        name: PropTypes.string.isRequired
+      })
+    }).isRequired,
+    onBackClick: PropTypes.func.isRequired
+  };
 
 export default MovieView;
