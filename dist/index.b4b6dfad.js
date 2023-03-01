@@ -27166,7 +27166,8 @@ const moviesData = [
         ],
         "director": "Tim Burton",
         "actors": "Alec Baldwin, Geena Davis, Annie McEnroe, Maurice Page",
-        "description": 'A couple of recently deceased ghosts contract the services of a "bio-exorcist" in order to remove the obnoxious new owners of their house.'
+        "description": 'A couple of recently deceased ghosts contract the services of a "bio-exorcist" in order to remove the obnoxious new owners of their house.',
+        "poster": "https://www.themoviedb.org/t/p/w300/bzUFLxQHbfhPRAl0x213Nh3qgAW.jpg"
     },
     {
         "id": 2,
@@ -27179,7 +27180,8 @@ const moviesData = [
         ],
         "director": "Peter Faiman",
         "actors": "Paul Hogan, Linda Kozlowski, John Meillon, David Gulpilil",
-        "description": "An American reporter goes to the Australian outback to meet an eccentric crocodile poacher and invites him to New York City."
+        "description": "An American reporter goes to the Australian outback to meet an eccentric crocodile poacher and invites him to New York City.",
+        "poster": "https://www.themoviedb.org/t/p/w300/rfJk4cLBZeh4umhy8C20FHFlYOU.jpg"
     },
     {
         "id": 3,
@@ -27193,7 +27195,8 @@ const moviesData = [
         ],
         "director": "Brad Bird, Jan Pinkava",
         "actors": "Patton Oswalt, Ian Holm, Lou Romano, Brian Dennehy",
-        "description": "A rat who can cook makes an unusual alliance with a young kitchen worker at a famous restaurant."
+        "description": "A rat who can cook makes an unusual alliance with a young kitchen worker at a famous restaurant.",
+        "poster": "https://www.themoviedb.org/t/p/w300/t3vaWRPSf6WjDSamIkKDs1iQWna.jpg"
     },
     {
         "id": 4,
@@ -27207,7 +27210,8 @@ const moviesData = [
         ],
         "director": "Mel Gibson",
         "actors": "Rudy Youngblood, Dalia Hern\xe1ndez, Jonathan Brewer, Morris Birdyellowhead",
-        "description": "As the Mayan kingdom faces its decline, the rulers insist the key to prosperity is to build more temples and offer human sacrifices. Jaguar Paw, a young man captured for sacrifice, flees to avoid his fate."
+        "description": "As the Mayan kingdom faces its decline, the rulers insist the key to prosperity is to build more temples and offer human sacrifices. Jaguar Paw, a young man captured for sacrifice, flees to avoid his fate.",
+        "poster": "https://www.themoviedb.org/t/p/w300/cBFQsU1LDBEOl0Ik0cygeB6wCLE.jpg"
     },
     {
         "id": 5,
@@ -27220,7 +27224,8 @@ const moviesData = [
         ],
         "director": "Brian De Palma",
         "actors": "Al Pacino, Steven Bauer, Michelle Pfeiffer, Mary Elizabeth Mastrantonio",
-        "description": "In Miami in 1980, a determined Cuban immigrant takes over a drug cartel and succumbs to greed."
+        "description": "In Miami in 1980, a determined Cuban immigrant takes over a drug cartel and succumbs to greed.",
+        "poster": "https://www.themoviedb.org/t/p/w300/iQ5ztdjvteGeboxtmRdXEChJOHh.jpg"
     },
     {
         "id": 6,
@@ -27233,21 +27238,39 @@ const moviesData = [
         ],
         "director": "Quentin Tarantino",
         "actors": "Jamie Foxx, Christoph Waltz, Leonardo DiCaprio, Kerry Washington",
-        "description": "With the help of a German bounty hunter, a freed slave sets out to rescue his wife from a brutal Mississippi plantation owner."
+        "description": "With the help of a German bounty hunter, a freed slave sets out to rescue his wife from a brutal Mississippi plantation owner.",
+        "poster": "https://www.themoviedb.org/t/p/w300/7oWY8VDWW7thTzWh3OKYRkWUlD5.jpg"
     }
 ];
 const MainView = ()=>{
     _s();
-    const [movies, setMovies] = (0, _react.useState)(moviesData);
+    const [movies, setMovies] = (0, _react.useState)([]);
+    (0, _react.useEffect)(()=>{
+        fetch("https://myflixx.herokuapp.com/api/v1/movies").then((response)=>response.json()).then(({ data  })=>{
+            console.log(data.data);
+            const result = data.map((element)=>{
+                return {
+                    id: element._id,
+                    title: element.Title,
+                    genres: element.Genres,
+                    image: element.ImagePath,
+                    description: element.Description,
+                    actors: element.Actors
+                };
+            });
+            setMovies(result);
+        }).catch((err)=>console.log(err));
+    }, []);
     const [selectedMovies, setSelectedMovies] = (0, _react.useState)(null);
     if (selectedMovies) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewDefault.default), {
         movie: selectedMovies,
         onBackClick: ()=>setSelectedMovies(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 98,
+        lineNumber: 124,
         columnNumber: 5
     }, undefined);
+    console.log(movies);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _react.Fragment), {
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
             className: "center",
@@ -27258,21 +27281,21 @@ const MainView = ()=>{
                     }
                 }, movie.id, false, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 108,
+                    lineNumber: 134,
                     columnNumber: 21
                 }, undefined))
         }, void 0, false, {
             fileName: "src/components/main-view/main-view.jsx",
-            lineNumber: 106,
+            lineNumber: 132,
             columnNumber: 13
         }, undefined)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 105,
+        lineNumber: 131,
         columnNumber: 10
     }, undefined);
 };
-_s(MainView, "bbqdFkVRHZCAq+GQfwIbuP+fblI=");
+_s(MainView, "U3aoGr6kIwpzd8M4VbtchKjB0TU=");
 _c = MainView;
 exports.default = MainView;
 var _c;
@@ -27494,7 +27517,7 @@ const MovieView = ({ movie , onBackClick  })=>{
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: "title: "
+                        children: "Title: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
                         lineNumber: 5,
@@ -27507,13 +27530,21 @@ const MovieView = ({ movie , onBackClick  })=>{
                 lineNumber: 4,
                 columnNumber: 13
             }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                src: movie.image,
+                alt: movie.title
+            }, void 0, false, {
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 8,
+                columnNumber: 13
+            }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: " genres: "
+                        children: " Genres: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 9,
+                        lineNumber: 10,
                         columnNumber: 17
                     }, undefined),
                     movie.genres.map((genre)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
@@ -27524,35 +27555,35 @@ const MovieView = ({ movie , onBackClick  })=>{
                             ]
                         }, void 0, true, {
                             fileName: "src/components/movie-view/movie-view.jsx",
-                            lineNumber: 10,
-                            columnNumber: 45
+                            lineNumber: 11,
+                            columnNumber: 46
                         }, undefined))
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 8,
+                lineNumber: 9,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                     children: [
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                            children: " description: "
+                            children: " Description: "
                         }, void 0, false, {
                             fileName: "src/components/movie-view/movie-view.jsx",
-                            lineNumber: 15,
+                            lineNumber: 16,
                             columnNumber: 17
                         }, undefined),
                         movie.description
                     ]
                 }, void 0, true, {
                     fileName: "src/components/movie-view/movie-view.jsx",
-                    lineNumber: 14,
+                    lineNumber: 15,
                     columnNumber: 17
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 12,
+                lineNumber: 13,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -27560,7 +27591,7 @@ const MovieView = ({ movie , onBackClick  })=>{
                 children: "Back"
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 20,
+                lineNumber: 21,
                 columnNumber: 13
             }, undefined)
         ]

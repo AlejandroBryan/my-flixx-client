@@ -2,17 +2,18 @@
     return(
         < div>
             <div>
-                <span >title: </span>
+                <span >Title: </span>
                 { movie.title }
             </div>
+            <img src={movie.image} alt={movie.title} />
             <div>
-                <span> genres: </span>
-               {movie.genres.map((genre) => <span> { genre } </span> )}
+                <span> Genres: </span>
+               { movie.genres.map((genre) => <span> { genre } </span> )}
             </div>
             <div>
                 
                 <p>
-                <span> description: </span>
+                <span> Description: </span>
                    {movie.description}         
                 </p>
 
