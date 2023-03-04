@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
             <img src={movie.image} alt={movie.title} />
             <div>
                 <span> Genres: </span>
-               { movie.genres.map((genre) => <span key={genre._id}> { genre.Name } </span> )}
+               { movie.genres.map((genre) => <span key={genre.id}> { genre.Name } </span> )}
             </div>
             <div>
                 

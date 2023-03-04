@@ -1,12 +1,28 @@
-import { useState, useEffect, Fragment, useLayoutEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import MovieCard from '../movie-card/movie-card'
 import MovieView from '../movie-view/movie-view';
+import LoginView from "../login-view/login-view";
+import SignupView from "../signup-view/signup-view";
 
 const MainView = () => {
 
-  const [movies, setMovies] = useState([])
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
+  const [user, setUser] = useState(storedUser? storedUser :  null);
+  const [token, setToken] = useState(storedToken? storedToken : null);
+
+  const [movies, setMovies] = useState([]);
+  const [selectedMovies, setSelectedMovies] = useState(null);
+  
+
   useEffect(() =>{
-    fetch('https://myflixx.herokuapp.com/api/v1/movies')
+    if (!token) {
+      return;
+    }
+    fetch('https://myflixx.herokuapp.com/api/v1/movies', 
+    {
+      headers: {Authorization: ` Bearer ${token}`}
+    })
     .then((response) => response.json())
     .then(({data}) =>{
         console.log(data);
@@ -23,23 +39,44 @@ const MainView = () => {
         setMovies(result);
     }).catch(err => console.log(err))
    
-  }, [])
+  }, [token])
 
-const [selectedMovies, setSelectedMovies] = useState(null);
+  if (!user) {
+    return(
+      <Fragment>
+         <LoginView 
+            onLoggedIn={(user, token) => {
+              setUser(user);
+              setToken(token);
 
+            }} 
+          />
+          or
+          <SignupView />
+
+
+      </Fragment>
+     
+
+    ) 
+  }
+    
 
 if (selectedMovies) {
   return(
-    <MovieView movie={selectedMovies}  onBackClick={()=> setSelectedMovies(null)} />
+    <MovieView
+     movie={selectedMovies} 
+     onBackClick={()=> setSelectedMovies(null)} 
+     />
 
   ) 
 }
 
 if(!movies) {
-    return <div> The list is empty </div>;
+  return <div> The list is empty </div>;
 }
- 
-    return (
+
+  return (
          <Fragment>         
             <div className="center">
                 {movies.map((movie) => (
@@ -51,7 +88,14 @@ if(!movies) {
                         }}
                     />
                 ))}
+                
             </div>
+            <button onClick={() => {
+               setUser(null); 
+               setToken(null);
+               localStorage.clear(); }}>
+              Logout
+            </button>
        </Fragment>
     );
   };
