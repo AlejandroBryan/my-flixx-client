@@ -16,16 +16,19 @@ const MainView = () => {
   
 
   useEffect(() =>{
-    if (!token) {
-      return;
-    }
+    if (!token) return;
+
     fetch('https://myflixx.herokuapp.com/api/v1/movies', 
     {
-      headers: {Authorization: ` Bearer ${token}`}
+      
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
     })
     .then((response) => response.json())
     .then(({data}) =>{
-        console.log(data);
+
         const result = data.map((element)=>{
             return {
                 id: element._id,
@@ -52,6 +55,7 @@ const MainView = () => {
             }} 
           />
           or
+          <hr />
           <SignupView />
 
 

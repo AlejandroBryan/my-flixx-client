@@ -30,7 +30,6 @@ import { useState } from "react";
             }
         }).then((response)=>{
             if(response.ok){
-                console.log(response)
                 alert('Successfully registered');
                 window.location.reload();
             }else{
@@ -41,6 +40,7 @@ import { useState } from "react";
 
     return (
         <form onSubmit={handleSubmit}>
+            <legend>Register:</legend>
             <label>
                 Firstname:
                 <input

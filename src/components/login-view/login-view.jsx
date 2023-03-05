@@ -35,6 +35,7 @@ const LoginView = ({onLoggedIn}) => {
   }
     return (
       <form onSubmit={handleSubmit}>
+        <legend>Login:</legend>
         <label>
           Username:
           <input 
