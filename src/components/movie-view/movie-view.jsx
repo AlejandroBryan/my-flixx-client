@@ -1,27 +1,29 @@
 import PropTypes from 'prop-types';
- 
+import {Card, Button, Badge} from 'react-bootstrap'
+
  const MovieView = ({ movie, onBackClick }) =>{
     return(
-        < div>
-            <div>
-                <span >Title: </span>
-                { movie.title }
-            </div>
-            <img src={movie.image} alt={movie.title} />
-            <div>
-                <span> Genres: </span>
-               { movie.genres.map((genre) => <span key={genre.id}> { genre.Name } </span> )}
-            </div>
-            <div>
-                
-                <p>
-                <span> Description: </span>
-                   {movie.description}         
-                </p>
-
-            </div>
-            <button onClick={onBackClick}>Back</button>
-        </div>
+        <Card>
+            <Card.Img src={movie.image} alt={movie.title} />
+            <Card.Body>
+               <Card.Title> Title : { movie.title } </Card.Title>
+               {
+                movie.genres &&
+                'Genres :'
+               }
+              
+               {
+               
+               movie.genres &&
+                  movie.genres.map((genre) => <Badge key={genre._id} className="mx-1">{genre.Name} </Badge>)
+              
+                }
+                <Card.Text>  
+                 {movie.description}         
+                </Card.Text>
+                <Button variant="primary" onClick={onBackClick}>Back</Button>
+            </Card.Body>
+        </Card>
     )
     
 }
