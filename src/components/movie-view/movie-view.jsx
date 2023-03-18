@@ -1,27 +1,31 @@
 import PropTypes from 'prop-types';
-import {Card, Button, Badge} from 'react-bootstrap'
+import { useParams } from "react-router-dom";
+import {Card, Button, Badge, Col} from 'react-bootstrap'
+import { Heart } from 'react-bootstrap-icons';
+import { Link } from "react-router-dom";
+import { Fragment } from 'react';
+import GenresView from './genres-view';
 
- const MovieView = ({ movie, onBackClick }) =>{
+ const MovieView = ({ movies, toggleFavMovies }) =>{
+  const { movieId } = useParams();
+  const movie = movies.find((m) => m.id === movieId);
+  const handleToggle= () => {
+    toggleFavMovies(movie);
+  };
     return(
-        <Card>
-            <Card.Img src={movie.image} alt={movie.title} />
+   
+        <Card className="mt-5">
+            <Card.Img variant='top' src={movie.image} alt={movie.title} />
             <Card.Body>
-               <Card.Title> Title : { movie.title } </Card.Title>
-               {
-                movie.genres &&
-                'Genres :'
-               }
-              
-               {
-               
-               movie.genres &&
-                  movie.genres.map((genre) => <Badge key={genre._id} className="mx-1">{genre.Name} </Badge>)
-              
-                }
+               <Card.Title> { movie.title } <Heart onClick={handleToggle} /> </Card.Title>
+               <GenresView genres={movie.genres}/>
                 <Card.Text>  
                  {movie.description}         
                 </Card.Text>
-                <Button variant="primary" onClick={onBackClick}>Back</Button>
+                <Link to={`/`}>
+                <Button variant="primary">Back</Button>
+                </Link>
+                
             </Card.Body>
         </Card>
     )
@@ -30,7 +34,7 @@ import {Card, Button, Badge} from 'react-bootstrap'
 
 
 MovieView.propTypes = {
-    movie: PropTypes.shape({
+    movies: PropTypes.shape({
       title: PropTypes.string.isRequired,
       image: PropTypes.string.isRequired,
       author: PropTypes.string,
@@ -38,7 +42,8 @@ MovieView.propTypes = {
         name: PropTypes.string.isRequired
       })
     }).isRequired,
-    onBackClick: PropTypes.func.isRequired
+    description: PropTypes.string,
+   
   };
 
 export default MovieView;

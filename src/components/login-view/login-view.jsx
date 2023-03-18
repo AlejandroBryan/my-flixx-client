@@ -15,7 +15,7 @@ const LoginView = ({onLoggedIn}) => {
       Password: password
     }
 
-    fetch('https://myflixx.herokuapp.com/api/v1/users/login',{
+    fetch('http://localhost:5000/api/v1/users/login',{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -23,10 +23,9 @@ const LoginView = ({onLoggedIn}) => {
       body: JSON.stringify(data)
     }).then((response) => response.json())
     .then(({user, token}) =>{
-      console.log('Login response', user);
       if(user){
         localStorage.setItem('user', JSON.stringify(user))
-        localStorage.setItem('token', JSON.stringify(token))
+        localStorage.setItem('token', token)
         onLoggedIn(user, token)
       }
       else{
@@ -35,7 +34,7 @@ const LoginView = ({onLoggedIn}) => {
     }).catch((error) => alert('Something went wrong', error.message))
   }
     return (
-      <Form onSubmit={handleSubmit}>
+      <Form  onSubmit={handleSubmit}>
         <legend>Login:</legend>
         <Form.Group controlId="loginUsername">
           <Form.Label>Username:</Form.Label>
@@ -49,7 +48,7 @@ const LoginView = ({onLoggedIn}) => {
         </Form.Group>
         
           
-        <Form.Group controlId="loginPassword">
+        <Form.Group className="mb-3" controlId="loginPassword">
           <Form.Label>Password:</Form.Label>
           <Form.Control
            type="password"
@@ -59,7 +58,7 @@ const LoginView = ({onLoggedIn}) => {
           >
           </Form.Control>
         </Form.Group>
-        <Button variant="secondary" md={5} type="submit">Submit</Button>
+        <Button variant="secondary" className='my3' md={5} type="submit">Submit</Button>
       </Form>
     );
   };

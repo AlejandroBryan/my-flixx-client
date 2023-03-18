@@ -1,19 +1,34 @@
 import PropTypes from 'prop-types';
-import { Card } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
+import { Heart } from 'react-bootstrap-icons';
+import {Link} from 'react-router-dom'
 
- const MovieCard = ({movie, onMovieClick}) => {
+ const MovieCard = ({movie, toggleFavMovies}) => {
   
+  const handleFavClick = (event) => {
+    event.preventDefault();
+    toggleFavMovies(movie);
+  };
+  let circleClasses = "inline-block p-7 rounded-full w-20 mx-auto";
+  let iconStyles = { color: "white", fontSize: "1.5em" };
     return ( 
-      <Card
-        onClick={() => {
-          onMovieClick(movie);
-       }}
-      >
-        <Card.Img  src={movie.image}/>
+      <Card className='m-3' >
+        <Card.Img variant='top'  src={movie.image}/>
         <Card.Body>
-          <Card.Title>{movie.title}</Card.Title>
+        <Card.Title>{movie.title} 
+        < Heart
+         
+        color='red'
+        className={circleClasses}
+        onClick={handleFavClick}
+         
+         
+         /> 
+        </Card.Title>
+          <Link to={`/movies/${movie.id}`}>
+          <Button variant='link'> Open</Button>
+          </Link >
         </Card.Body>
-        
       </Card>
     ) 
   };
@@ -27,7 +42,7 @@ import { Card } from 'react-bootstrap';
       genre: PropTypes.shape({
         name: PropTypes.string.isRequired
       })
-    }).isRequired,
-    onMovieClick: PropTypes.func.isRequired
+    }).isRequired
+  
   };
   export default MovieCard;

@@ -3,103 +3,255 @@ import MovieCard from '../movie-card/movie-card'
 import MovieView from '../movie-view/movie-view';
 import LoginView from "../login-view/login-view";
 import SignupView from "../signup-view/signup-view";
-import { Row, Col, Button } from "react-bootstrap";
+import ProfileView from "../profile-view/profile-view";
+import NavigationBar from "../navigation-bar/navigation-bar";
+import { Row, Col, Button, Container } from "react-bootstrap";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 
 const MainView = () => {
 
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
+  const [movies, setMovies] = useState([]);
   const [user, setUser] = useState(storedUser? storedUser : null);
   const [token, setToken] = useState(storedToken? storedToken : null);
-  const [movies, setMovies] = useState([]);
-  const [selectedMovies, setSelectedMovies] = useState(null);
+  const [favMovies, setFavMovies] = useState([]);
+  
+  
   
 
-  const getMovies =() =>{
+  const toggleFavMovies = (movie) => {
+    const index = favMovies.indexOf(movie);
+    if (index > -1) {
+      DeleteFavMovies(movie);
+      setFavMovies(
+        favMovies.filter((favMovie) => favMovie.id !== movie.id)
+      );
+    } else {
+      addFavMovies(movie);
+      setFavMovies([...favMovies, movie]);
+    }
+  };
+  
+  const addFavMovies = (movie)=>{
 
-    fetch('https://myflixx.herokuapp.com/api/v1/movies', 
-    {
-      
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    })
-    .then((response) => response.json())
-    .then(({data}) =>{
-      console.log(' dt', data);
-        const result = data.map((element)=>{
-            return {
-                id: element._id,
-                title: element.Title,
-                genres: element.Genres,
-                image: element.ImagePath,
-                description: element.Description,
-                actors: element.Actors
+     fetch(
+            `http://localhost:5000/api/v1/users/${user.Username}/movies/${movie.id}`,{
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
             }
-        })
-        setMovies(result);
-    }).catch(err => console.log(err))
-   
+        }
+    ).then(response => response.json()) 
+     .catch(error => console.log(error))
+    }
 
-  }
+    const DeleteFavMovies = (movie)=>{
+
+      fetch(
+             `http://localhost:5000/api/v1/users/${user.Username}/movies/${movie.id}`,{
+             method: 'Delete',
+             headers: {
+                 Authorization: `Bearer ${token}`,
+                 'Content-Type': 'application/json'
+             }
+         }
+     ).then(response => response.json()) 
+      .catch(error => console.log(error))
+     }
+
+  
+
+
 
   useEffect(() => {
     if (!token) return;
+  
+    const headers = { 
+      Authorization: `Bearer ${token}`
+    }
+    const getUser = () =>{
 
-    getMovies();
+      fetch(
+             `http://localhost:5000/api/v1/users/${user.Username}`,{method: 'GET', headers}
+     ).then(response => response.json())
+       .then(({data: user}) =>{
 
+        const result = user.FavoriteMovies.map((element)=>{
+          return {
+              id: element._id,
+              title: element.Title,
+              genres: element.Genres,
+              image: element.ImagePath,
+              description: element.Description,
+              actors: element.Actors,
+              director: element.Director,
+          }
+      })
+        localStorage.setItem('user', JSON.stringify(user))
+        console.log('user', JSON.parse(localStorage.getItem('user')))
+        setFavMovies(result)
+  
+       }) 
+      .catch(error => console.log(error))
+     }
+   getUser()
+
+  const fetchMovies =()=>{favMovies
+    fetch('http://localhost:5000/api/v1/movies',{ headers })
+      .then((response) => response.json())
+      .then(({data}) =>{
+          const result = data.map((element)=>{
+              return {
+                  id: element._id,
+                  title: element.Title,
+                  genres: element.Genres,
+                  image: element.ImagePath,
+                  description: element.Description,
+                  actors: element.Actors,
+                  director: element.Director,
+              }
+          })
+          setMovies(result);
+      }).catch(err => console.log(err))
+
+}
     
-  }, [token])
+fetchMovies();
+  }, [token]);
 
- console.log(movies)
+  useEffect(()=>{
+    const initFavMovies = movies.filter((movie) => user.FavoriteMovies.includes(movie.id))
+    setFavMovies(initFavMovies)
+    console.log(user)
+    console.log(favMovies)
+  },[user, token])
+
+  const clearLocalStorage =()=>{
+      setUser(null);
+      setToken(null);
+      localStorage.clear();
+  }
+ 
     return(
-      <Row className="justify-content-md-center">
-        {!user ? (
-          <Fragment>
-            <Col>
-              <LoginView 
-                onLoggedIn={(user, token) => {
-                 setUser(user);
-                 setToken(token);
-                }} 
-               />
-               Or
-              <SignupView />
-            </Col>
-          </Fragment>
-        ): selectedMovies ?(
-          <MovieView
-            movie={selectedMovies} 
-            onBackClick={()=> setSelectedMovies(null)} 
-          />
-
-        ): !movies && movies.length === 0 ?(
-          <Col> The list is empty </Col>
-        ): (
-          <Fragment>         
-            
-                {movies.map((movie) => (
-                  <Col key={movie.id} md={3} >
-                    <MovieCard
-                        movie={movie}
-                        onMovieClick={(newSelectedMovie) => {
-                            setSelectedMovies(newSelectedMovie);
-                        }}
-                    />
+      <BrowserRouter>
+      <NavigationBar user={user}  onLoggedOut={clearLocalStorage} />
+      <Container>
+         <Routes>
+            <Route
+              exact
+              path="/signup"
+              element={
+              <Fragment>
+                {user ? (
+                  <Navigate to="/" />
+                ):(
+                  <Col md={5}>
+                    <SignupView/> 
                     </Col>
-                ))}
-            <Button variant="warning" onClick={() => {
-               setUser(null); 
-               setToken(null);
-               localStorage.clear(); }}>
-              Logout
-            </Button>
-              
-       </Fragment>
-      )}
+                )}
+              </Fragment>
+            }
+        />
+
+      <Route
+         path="/login"
+         element={
+          <Fragment>
+            {user ? (
+              <Navigate to="/" />
+            ):(
+              <Col md={5}>
+                <LoginView 
+                onLoggedIn={
+                  (user, token) =>{
+                    setUser(user)
+                    setToken(token)
+
+                  }}/>
+              </Col>
+            )}
+          </Fragment>
+         }
+      />
+
+      <Route
+        exact
+        path="/movies/:movieId"
+        element={
+          <Fragment>
+            {!user ? (
+              <Navigate to="/login" replace />
+            ):
+              movies.length === 0 ? (
+                <Col>The list is empty!</Col>
+            ):(
+              <Col md={8}>
+                <MovieView movies={movies} toggleFavMovies={toggleFavMovies} />
+              </Col>
+            )}
+          </Fragment>
+            }
+        />
+
+        <Route
+          path="/"
+          element={
+            <Fragment>
+              {!user?(
+                <Navigate to="/login" />
+              ): movies.length === 0 ? (
+                <Col>
+                   Loading...
+                </Col>
+                
+              ):(
+                <Row gap={5} className="justify-content-center py5 mb5">
+                    {movies.map((movie) => (
+                    <Col lg={3} className="m-3" key={movie.id}>
+                      <MovieCard
+                          movie={movie}
+                          toggleFavMovies={toggleFavMovies}
+                      />
+                    </Col>
+                  ))}
+                </Row> 
+              )}
+            </Fragment>
+          }
+        
+        />
+        <Route
+        exact
+        path="/profile"
+        element={
+          <Fragment>
+            {!user?(
+            <Navigate to="/login" />
+            ):(
+            <ProfileView 
+            user={user} 
+            token={token} 
+            movies={movies} 
+            favMovies={favMovies}
+            toggleFavMovies={toggleFavMovies} />
+            )
+            
+          
+          }
+            
+          </Fragment>
      
-      </Row>  
+        }
+        
+        
+        />
+        </Routes>
+        </Container>
+      </BrowserRouter>
+      
     )
     
   };
