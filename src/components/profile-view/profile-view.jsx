@@ -15,7 +15,7 @@ const ProfileView = ({ user, token, favMovies, toggleFavMovies }) => {
 
  
   const handleDelete = ()=>{
-    fetch(`http://localhost:5000/api/v1/users/${user.Username}`, {
+    fetch(`https://myflixx.herokuapp.com/api/v1/users/${user.Username}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

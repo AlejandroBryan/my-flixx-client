@@ -24,7 +24,7 @@ import { redirect } from "react-router-dom";
             Birthday:  birthday
         }
 
-        fetch('http://localhost:5000/api/v1/users/register',{
+        fetch('https://myflixx.herokuapp.com/api/v1/users/register',{
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

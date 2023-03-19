@@ -37,7 +37,7 @@ const MainView = () => {
   const addFavMovies = (movie)=>{
 
      fetch(
-            `http://localhost:5000/api/v1/users/${user.Username}/movies/${movie.id}`,{
+            `https://myflixx.herokuapp.com/api/v1/users/${user.Username}/movies/${movie.id}`,{
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -51,7 +51,7 @@ const MainView = () => {
     const DeleteFavMovies = (movie)=>{
 
       fetch(
-             `http://localhost:5000/api/v1/users/${user.Username}/movies/${movie.id}`,{
+             `https://myflixx.herokuapp.com/api/v1/users/${user.Username}/movies/${movie.id}`,{
              method: 'Delete',
              headers: {
                  Authorization: `Bearer ${token}`,
@@ -75,7 +75,7 @@ const MainView = () => {
     const getUser = () =>{
 
       fetch(
-             `http://localhost:5000/api/v1/users/${user.Username}`,{method: 'GET', headers}
+             `https://myflixx.herokuapp.com/api/v1/users/${user.Username}`,{method: 'GET', headers}
      ).then(response => response.json())
        .then(({data: user}) =>{
 
@@ -99,7 +99,7 @@ const MainView = () => {
    getUser()
 
   const fetchMovies =()=>{favMovies
-    fetch('http://localhost:5000/api/v1/movies',{ headers })
+    fetch('https://myflixx.herokuapp.com/api/v1/movies/',{ headers })
       .then((response) => response.json())
       .then(({data}) =>{
           const result = data.map((element)=>{

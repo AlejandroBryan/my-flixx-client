@@ -19,7 +19,7 @@ const toggleFavMovies =({movie}) =>{
 
         event.preventDefault();
     
-        fetch(`http://localhost:5000/api/v1/users/${user.Username}/movies/${movie.id}`,{
+        fetch(`https://myflixx.herokuapp.com/api/v1/users/${user.Username}/movies/${movie.id}`,{
             method: 'Delete',
             body: JSON.stringify(data),
             headers: {

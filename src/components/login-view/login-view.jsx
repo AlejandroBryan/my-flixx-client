@@ -15,7 +15,7 @@ const LoginView = ({onLoggedIn}) => {
       Password: password
     }
 
-    fetch('http://localhost:5000/api/v1/users/login',{
+    fetch('https://myflixx.herokuapp.com/api/v1/users/login',{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

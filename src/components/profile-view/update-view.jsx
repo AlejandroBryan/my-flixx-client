@@ -24,7 +24,7 @@ const UpdateView = ({user, token})=>{
             Birthday:  birthday
         }
 
-        fetch(`http://localhost:5000/api/v1/users/${user.Username}`,{
+        fetch(`https://myflixx.herokuapp.com/api/v1/users/${user.Username}`,{
             method: 'PUT',
             body: JSON.stringify(data),
             headers: {
