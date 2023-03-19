@@ -91,7 +91,6 @@ const MainView = () => {
           }
       })
         localStorage.setItem('user', JSON.stringify(user))
-        console.log('user', JSON.parse(localStorage.getItem('user')))
         setFavMovies(result)
   
        }) 
@@ -125,16 +124,15 @@ fetchMovies();
   useEffect(()=>{
     const initFavMovies = movies.filter((movie) => user.FavoriteMovies.includes(movie.id))
     setFavMovies(initFavMovies)
-    console.log(user)
-    console.log(favMovies)
   },[user, token])
 
   const clearLocalStorage =()=>{
       setUser(null);
       setToken(null);
+      window.location.reload();
       localStorage.clear();
   }
- 
+  
     return(
       <BrowserRouter>
       <NavigationBar user={user}  onLoggedOut={clearLocalStorage} />
@@ -204,7 +202,7 @@ fetchMovies();
                 <Navigate to="/login" />
               ): movies.length === 0 ? (
                 <Col>
-                   Loading...
+                  <h1>Loading...</h1> 
                 </Col>
                 
               ):(

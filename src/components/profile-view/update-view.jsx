@@ -4,14 +4,12 @@ import { Col, Form, Button, Card } from "react-bootstrap";
 
 const UpdateView = ({user, token})=>{
 
-    const [firstname, setFirstname] = useState(user.Firstname);
-    const [lastname, setLastname] = useState(user.Lastname);
-    const [username, setUsername] = useState(user.Username);
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [email, setEmail] = useState(user.Email);
-    const [birthday, setBirthday] = useState(new Date(user.Birthday));
-
-    
+    const [email, setEmail] = useState('');
+    const [birthday, setBirthday] = useState('');
 
     const handleUpdate =(event)=>{
 
@@ -37,7 +35,8 @@ const UpdateView = ({user, token})=>{
           .then((updatedUser) =>{
             if(updatedUser){
                 alert('Successfully updated');
-                localStorage.setItem('user', JSON.stringify(updatedUser));
+                console.log(updatedUser)
+                localStorage.clear();
                 window.location.reload();
             }else{
                 alert('Failed to update')
@@ -58,6 +57,7 @@ return (
                         </Form.Label>
                         <Form.Control
                         type="text"
+                        value={firstname}
                         onChange={(e) => setFirstname(e.target.value)}
                         required
                         minLength="3"
@@ -70,6 +70,7 @@ return (
                         <Form.Label>Lastname:</Form.Label>
                         <Form.Control
                         type="text"
+                        value={lastname}
                         onChange={(e) => setLastname(e.target.value)}
                         required
                         minLength="3"
@@ -81,6 +82,7 @@ return (
                         <Form.Label>Username:</Form.Label>
                         <Form.Control
                         type="text"
+                        value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
                         minLength="3"
@@ -93,6 +95,7 @@ return (
                         <Form.Label>Password:</Form.Label>
                         <Form.Control
                         type="password"
+                        value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                         minLength="8"
@@ -105,6 +108,7 @@ return (
                         <Form.Label>Email:</Form.Label>
                         <Form.Control
                         type="email"
+                        value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                         >
@@ -115,6 +119,7 @@ return (
                         <Form.Label> Birthday:</Form.Label>
                         <Form.Control
                             type="date"
+                            value={birthday}
                             onChange={(e) => setBirthday(e.target.value)}
                         >
                         </Form.Control>

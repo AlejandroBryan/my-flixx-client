@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { redirect } from "react-router-dom";
 
  const SignupView = () => {
 
@@ -32,6 +33,7 @@ import { Button, Form } from "react-bootstrap";
         }).then((response)=>{
             if(response.ok){
                 alert('Successfully registered');
+                redirect("/");
                 window.location.reload();
             }else{
                 alert('Failed to register')

@@ -1,6 +1,6 @@
-import {Col, Card} from 'react-bootstrap';
+import {Col, Card, Button} from 'react-bootstrap';
 
-const UserInfo=({user})=>{
+const UserInfo=({user, handleUserDelete})=>{
     return(
         <Col md={4} className="mb-3"  >
         <Card>
@@ -17,7 +17,7 @@ const UserInfo=({user})=>{
                 </div>
           </Card.Body>
         </Card>
-       
+       <Button className="mt-3" variant='danger' onClick={handleUserDelete}>Delete Account</Button>
     </Col>
     )
 }
