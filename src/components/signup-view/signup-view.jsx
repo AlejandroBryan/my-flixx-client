@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { redirect } from "react-router-dom";
 
  const SignupView = () => {
 
@@ -23,7 +24,7 @@ import { Button, Form } from "react-bootstrap";
             Birthday:  birthday
         }
 
-        fetch('http://localhost:5000/api/v1/users/register',{
+        fetch('https://myflixx.herokuapp.com/api/v1/users/register',{
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -32,6 +33,7 @@ import { Button, Form } from "react-bootstrap";
         }).then((response)=>{
             if(response.ok){
                 alert('Successfully registered');
+                redirect("/");
                 window.location.reload();
             }else{
                 alert('Failed to register')

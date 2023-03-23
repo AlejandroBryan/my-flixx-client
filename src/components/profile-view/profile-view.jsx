@@ -13,34 +13,27 @@ const ProfileView = ({ user, token, favMovies, toggleFavMovies }) => {
   const [email, setEmail] = useState(user.Email);
   const [birthday, setBirthday] = useState(new Date(user.Birthday));
 
-  const handleUpdate = (event) => {
-    event.preventDefault();
-
-    const data = {
-      Firstname: firstname,
-      Lastname: lastname,
-      Username: username,
-      Password: password,
-      Email: email,
-      Birthday: birthday,
-    };
-
-    fetch(`http://localhost:5000/api/v1/users/${user.Username}`, {
-      method: "PUT",
-      body: JSON.stringify(data),
+ 
+  const handleDelete = ()=>{
+    fetch(`https://myflixx.herokuapp.com/api/v1/users/${user.Username}`, {
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     }).then((response) => {
       if (response.ok) {
-        alert("Successfully updated");
+        alert("Successfully Delete");
         window.location.reload();
+        localStorage.clear();
       } else {
         alert("Failed to update");
       }
-    });
-  };
+    }).catch((error) => {console.log(error)});
+  }
+
+
+
 
   const handleToggle = (movie) => {
     toggleFavMovies(movie);
@@ -48,26 +41,9 @@ const ProfileView = ({ user, token, favMovies, toggleFavMovies }) => {
   return (
     <Fragment>
       <Row className="justify-content-center  mt-4 ">
-        <UserInfo user={user} />
+        <UserInfo user={user} handleUserDelete={handleDelete} />
         <UpdateView user={user} token={token} />
         <FavoriteMovies  favMovies={favMovies} toggleFavMovies={toggleFavMovies}/>
-
-    {/*     <Col md="10" className="m-5">
-          {favMovies ? (
-            <Row>
-              <h3>Favorites movies list</h3>
-              {favMovies.map((movie) => (
-                <Col md="4" key={movie.id} className="mt-2">
-                  <MovieCard movie={movie}  toggleFavMovies={handleToggle} />
-                </Col>
-              ))}
-            </Row>
-          ) : (
-            <Col>
-              <h3>Favorites movies is empty</h3>
-            </Col>
-          )}
-        </Col> */}
       </Row>
     </Fragment>
   );
