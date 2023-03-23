@@ -24,7 +24,7 @@ const MainView = () => {
   const toggleFavMovies = (movie) => {
     const index = favMovies.indexOf(movie);
     if (index > -1) {
-      DeleteFavMovies(movie);
+      deleteFavMovies(movie);
       setFavMovies(
         favMovies.filter((favMovie) => favMovie.id !== movie.id)
       );
@@ -48,7 +48,7 @@ const MainView = () => {
      .catch(error => console.log(error))
     }
 
-    const DeleteFavMovies = (movie)=>{
+    const deleteFavMovies = (movie)=>{
 
       fetch(
              `http://localhost:5000/api/v1/users/${user.Username}/movies/${movie.id}`,{
@@ -91,7 +91,6 @@ const MainView = () => {
           }
       })
         localStorage.setItem('user', JSON.stringify(user))
-        console.log('user', JSON.parse(localStorage.getItem('user')))
         setFavMovies(result)
   
        }) 
@@ -125,8 +124,6 @@ fetchMovies();
   useEffect(()=>{
     const initFavMovies = movies.filter((movie) => user.FavoriteMovies.includes(movie.id))
     setFavMovies(initFavMovies)
-    console.log(user)
-    console.log(favMovies)
   },[user, token])
 
   const clearLocalStorage =()=>{
