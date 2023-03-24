@@ -1,3 +1,4 @@
+import { API } from "../../utils";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { redirect } from "react-router-dom";
@@ -24,7 +25,7 @@ import { redirect } from "react-router-dom";
             Birthday:  birthday
         }
 
-        fetch('https://myflixx.herokuapp.com/api/v1/users/register',{
+        fetch(`${API}/users/register`,{
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

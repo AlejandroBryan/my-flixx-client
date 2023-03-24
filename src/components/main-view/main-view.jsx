@@ -1,4 +1,6 @@
+
 import { useState, useEffect, Fragment } from "react";
+import { API } from "../../utils";
 import MovieCard from '../movie-card/movie-card'
 import MovieView from '../movie-view/movie-view';
 import LoginView from "../login-view/login-view";
@@ -16,28 +18,28 @@ const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [user, setUser] = useState(storedUser? storedUser : null);
   const [token, setToken] = useState(storedToken? storedToken : null);
-  const [favMovies, setFavMovies] = useState([]);
-  
+  const [favoritesMovies, setFavoritesMovies] = useState([]);
+
   
   
 
-  const toggleFavMovies = (movie) => {
-    const index = favMovies.indexOf(movie);
+  const toggleFavoritesMovies = (movie) => {
+    const index = favoritesMovies.indexOf(movie);
     if (index > -1) {
-      deleteFavMovies(movie);
-      setFavMovies(
-        favMovies.filter((favMovie) => favMovie.id !== movie.id)
+      deleteFavoritesMovies(movie);
+      setFavoritesMovies(
+        favoritesMovies.filter((favMovie) => favMovie.id !== movie.id)
       );
     } else {
-      addFavMovies(movie);
-      setFavMovies([...favMovies, movie]);
+      addFavoritesMovies(movie);
+      setFavoritesMovies([...favoritesMovies, movie]);
     }
   };
   
-  const addFavMovies = (movie)=>{
+  const addFavoritesMovies = (movie)=>{
 
      fetch(
-            `https://myflixx.herokuapp.com/api/v1/users/${user.Username}/movies/${movie.id}`,{
+            `${API}/users/${user.Username}/movies/${movie.id}`,{
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -48,10 +50,10 @@ const MainView = () => {
      .catch(error => console.log(error))
     }
 
-    const deleteFavMovies = (movie)=>{
+    const deleteFavoritesMovies = (movie)=>{
 
       fetch(
-             `https://myflixx.herokuapp.com/api/v1/users/${user.Username}/movies/${movie.id}`,{
+             `${API}/users/${user.Username}/movies/${movie.id}`,{
              method: 'Delete',
              headers: {
                  Authorization: `Bearer ${token}`,
@@ -75,7 +77,7 @@ const MainView = () => {
     const getUser = () =>{
 
       fetch(
-             `https://myflixx.herokuapp.com/api/v1/users/${user.Username}`,{method: 'GET', headers}
+             `${API}/users/${user.Username}`,{method: 'GET', headers}
      ).then(response => response.json())
        .then(({data: user}) =>{
 
@@ -91,15 +93,15 @@ const MainView = () => {
           }
       })
         localStorage.setItem('user', JSON.stringify(user))
-        setFavMovies(result)
+        setFavoritesMovies(result)
   
        }) 
       .catch(error => console.log(error))
      }
    getUser()
 
-  const fetchMovies =()=>{favMovies
-    fetch('https://myflixx.herokuapp.com/api/v1/movies/',{ headers })
+  const fetchMovies =()=>{favoritesMovies
+    fetch(`${API}/movies/`,{ headers })
       .then((response) => response.json())
       .then(({data}) =>{
           const result = data.map((element)=>{
@@ -122,9 +124,9 @@ fetchMovies();
   }, [token]);
 
   useEffect(()=>{
-    const initFavMovies = movies.filter((movie) => user.FavoriteMovies.includes(movie.id))
-    setFavMovies(initFavMovies)
-  },[user, token])
+    const initFavoritesMovies = movies.filter((movie) => user.FavoriteMovies.includes(movie.id))
+    setFavoritesMovies(initFavoritesMovies)
+  }, [user, token]);
 
   const clearLocalStorage =()=>{
       setUser(null);
@@ -187,7 +189,11 @@ fetchMovies();
                 <Col>The list is empty!</Col>
             ):(
               <Col md={8}>
-                <MovieView movies={movies} toggleFavMovies={toggleFavMovies} />
+                <MovieView 
+                movies={movies}
+                favoritesMovies={favoritesMovies}
+                 toggleFavoritesMovies={toggleFavoritesMovies}
+                />
               </Col>
             )}
           </Fragment>
@@ -211,7 +217,8 @@ fetchMovies();
                     <Col lg={3} className="m-3" key={movie.id}>
                       <MovieCard
                           movie={movie}
-                          toggleFavMovies={toggleFavMovies}
+                          isFavorites={favoritesMovies.some(favMovie => favMovie.id === movie.id)}
+                          toggleFavoritesMovies={toggleFavoritesMovies}
                       />
                     </Col>
                   ))}
@@ -233,8 +240,8 @@ fetchMovies();
             user={user} 
             token={token} 
             movies={movies} 
-            favMovies={favMovies}
-            toggleFavMovies={toggleFavMovies} />
+            favoritesMovies={favoritesMovies}
+            toggleFavoritesMovies={toggleFavoritesMovies} />
             )
             
           

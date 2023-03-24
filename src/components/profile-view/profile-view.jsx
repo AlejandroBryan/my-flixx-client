@@ -5,7 +5,7 @@ import UpdateView from "./update-view";
 import FavoriteMovies from "./favorites-movies";
 import UserInfo from "./user-info";
 
-const ProfileView = ({ user, token, favMovies, toggleFavMovies }) => {
+const ProfileView = ({ user, token, favoritesMovies, toggleFavoritesMovies }) => {
   const [firstname, setFirstname] = useState(user.Firstname);
   const [lastname, setLastname] = useState(user.Lastname);
   const [username, setUsername] = useState(user.Username);
@@ -36,14 +36,14 @@ const ProfileView = ({ user, token, favMovies, toggleFavMovies }) => {
 
 
   const handleToggle = (movie) => {
-    toggleFavMovies(movie);
+    toggleFavoritesMovies(movie);
   };
   return (
     <Fragment>
       <Row className="justify-content-center  mt-4 ">
         <UserInfo user={user} handleUserDelete={handleDelete} />
         <UpdateView user={user} token={token} />
-        <FavoriteMovies  favMovies={favMovies} toggleFavMovies={toggleFavMovies}/>
+        <FavoriteMovies  favoritesMovies={favoritesMovies} toggleFavoritesMovies={toggleFavoritesMovies}/>
       </Row>
     </Fragment>
   );

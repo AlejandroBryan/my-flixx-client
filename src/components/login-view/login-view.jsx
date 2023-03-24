@@ -1,3 +1,4 @@
+import { API } from "../../utils";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
@@ -15,7 +16,7 @@ const LoginView = ({onLoggedIn}) => {
       Password: password
     }
 
-    fetch('https://myflixx.herokuapp.com/api/v1/users/login',{
+    fetch(`${API}/users/login`,{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

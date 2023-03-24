@@ -5,7 +5,7 @@ import {LinkContainer} from 'react-router-bootstrap';
 
 const NavigationBar = ({ user, onLoggedOut }) => {
   return (
-    <Navbar bg="primary" expand="lg" variant="light">
+    <Navbar bg="primary" className="px-5" variant="dark">
       <Container fluid>
         <LinkContainer to="/">
         <Navbar.Brand>Myflix App</Navbar.Brand>

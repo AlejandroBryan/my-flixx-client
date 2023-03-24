@@ -1,20 +1,20 @@
 import {Row, Col} from 'react-bootstrap'
 import MovieCard from "../movie-card/movie-card";
 
-const FavoriteMovies= ({favMovies, toggleFavMovies})=> {
+const FavoriteMovies= ({favoritesMovies, toggleFavoritesMovies})=> {
 
     const handleToggle = (movie) => {
-        toggleFavMovies(movie);
+        toggleFavoritesMovies(movie);
       };
     return(
         <Col md="10" className="m-5">
-            {favMovies?(
+            {favoritesMovies?(
                 <Row>
                     <h3>Favorites movies list</h3>
                    {
-                    favMovies.map((movie) =>(
+                    favoritesMovies.map((movie) =>(
                     <Col  md="4" className="mt-2" key={movie.id} >
-                             <MovieCard movie={movie} toggleFavMovies={handleToggle}  />
+                             <MovieCard movie={movie} isFavorites={favoritesMovies.includes(movie)} toggleFavoritesMovies={handleToggle}  />
                     </Col> 
                          ))}
                 </Row>  
