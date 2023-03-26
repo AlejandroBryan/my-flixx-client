@@ -9,7 +9,10 @@
   "scripts": {
     "start": "parcel src/index.html --open",
     "build": "parcel build src/index.html --dist-dir  docs --public-url ./",
-    "deploy": "npm run build && git add . && git commit -a -m 'latest build' &&  git push -u origin master"
+    "deploy": "git add . && git commit -a -m 'final checkout' &&  git push -u origin master",
+    "lint": "eslint -c .eslintrc --ext src/*.jsx",
+    "fix": "eslint --fix --ext .jsx src/ ",
+    "format": "prettier --config .prettierrc --write src/"
   },
   "keywords": [],
   "author": "",
@@ -27,7 +30,11 @@
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.3",
+    "eslint": "^7.32.0",
+    "eslint-config-plugin": "^1.0.11",
+    "eslint-config-prettier": "^8.8.0",
     "parcel": "^2.8.3",
+    "prettier": "^2.8.7",
     "process": "^0.11.10"
   }
 }
