@@ -35,7 +35,7 @@ const LoginView = ({onLoggedIn}) => {
     }).catch((error) => alert('Something went wrong', error.message))
   }
     return (
-      <Form  onSubmit={handleSubmit}>
+      <Form  className="m-auto w-100" onSubmit={handleSubmit}>
         <legend>Login:</legend>
         <Form.Group controlId="loginUsername">
           <Form.Label>Username:</Form.Label>
