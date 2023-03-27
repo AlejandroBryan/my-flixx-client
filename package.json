@@ -9,7 +9,7 @@
   "scripts": {
     "start": "parcel src/index.html --open",
     "build": "parcel build src/index.html --dist-dir  docs --public-url ./",
-    "deploy": "git add . && git commit -a -m 'final checkout' &&  git push",
+    "deploy": "git add . && git commit -a -m 'some corrections' &&  git push",
     "lint": "eslint -c .eslintrc --ext src/*.jsx",
     "fix": "eslint --fix --ext .jsx src/ ",
     "format": "prettier --config .prettierrc --write src/"

@@ -5,7 +5,7 @@ import { HeartFill } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import { Fragment } from 'react';
 import GenresView from './genres-view';
-
+import DirectorView from './directors-view';
 
 const MovieView = ({ movies, favoritesMovies, toggleFavoritesMovies }) => {
    const { movieId } = useParams();
@@ -15,9 +15,10 @@ const MovieView = ({ movies, favoritesMovies, toggleFavoritesMovies }) => {
    const handleToggle = () => {
       toggleFavoritesMovies(movie);
    };
-   
+
+
    return (
-      <Row>
+      <Row className='my-4'>
          <Col md={4} className="mt-5">
             <Image src={movie.image} alt={movie.title} fluid />
             <Link to={`/`}>
@@ -57,15 +58,17 @@ const MovieView = ({ movies, favoritesMovies, toggleFavoritesMovies }) => {
                      </span>
                      {movie.description}
                   </Card.Text>
-                  <h3 className="mt-4">Director</h3>
-                  <Card.Text>
-                     <span className="mt-2" style={{ display: 'block' }}>
-                        Biography:
-                     </span>
-                     {movie.director.Biography}
-                  </Card.Text>
+                  {(movie.director.length > 1) ? 
+                  <h3 className="mt-4">Directors</h3>:
+                   <h3 className="mt-4">Director</h3>}
+                  {movie.director.map((director) => (
+                     <DirectorView name={director.Name} biography={director.Biography} />
+                  ))}
+
                   <h4>Actors</h4>
-                  {movie.actors.map((actor)=><span className='m-2'>{actor}</span>)}
+                  {movie.actors.map((actor) => (
+                     <span className="me-3">[ {actor} ]</span>
+                  ))}
                </Card.Body>
             </Card>
          </Col>
