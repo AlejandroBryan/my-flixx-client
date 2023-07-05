@@ -57,6 +57,6 @@ Reference, code, documentation, etc.
 * [React](https://react.dev/) 
 * [Bootstrap](https://getbootstrap.com/)
 * [React-Bootstrap](https://react-bootstrap.github.io/)
-* [eslint](https://eslint.org/)
-* [prettier](https://prettier.io/)
+* [Eslint](https://eslint.org/)
+* [Prettier](https://prettier.io/)
 
