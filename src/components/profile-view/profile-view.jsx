@@ -1,12 +1,11 @@
 import { Fragment, useState } from 'react';
-import { Row, Col, Form, Button, Card } from 'react-bootstrap';
+import { Row} from 'react-bootstrap';
 import { API } from '../../utils';
 import UpdateView from './update-view';
 import FavoriteMovies from './favorites-movies';
 import UserInfo from './user-info';
 
 const ProfileView = ({ user, token, favoritesMovies, toggleFavoritesMovies }) => {
-   console.log(API);
       const handleDelete = () => {
       fetch(`${API}/users/${user.Username}`, {
          method: 'DELETE',
@@ -28,7 +27,6 @@ const ProfileView = ({ user, token, favoritesMovies, toggleFavoritesMovies }) =>
             console.log(error);
          });
    };
-
    return (
       <Fragment>
          <Row className="justify-content-center  mt-4 ">
