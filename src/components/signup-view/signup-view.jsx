@@ -25,7 +25,7 @@ const SignupView = () => {
 
       fetch(`${API}/users/register`, {
          method: 'POST',
-         credentials: 'include',
+         mode: 'no-cors',
          body: JSON.stringify(data),
          headers: {
             'Content-Type': 'application/json',
