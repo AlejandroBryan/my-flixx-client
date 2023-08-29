@@ -34,7 +34,7 @@ jobs:
 
       # should save this keys in github, settings of the project, secrets :
       # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
-      - name: aws deploy
+      - name: S3 Deployment
         uses: AlejandroBryan/s3-sync-action@main
         env: 
           BUCKET_NAME : ${{ secrets.BUCKET_NAME }}
