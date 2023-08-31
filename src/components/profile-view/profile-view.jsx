@@ -6,14 +6,17 @@ import FavoriteMovies from './favorites-movies';
 import UserInfo from './user-info';
 
 const ProfileView = ({ user, token, favoritesMovies, toggleFavoritesMovies }) => {
-
    const handleDelete = () => {
       fetch(`https://myflixx.herokuapp.com/api/v1/users/${user.Username}`, {
          method: 'DELETE',
-   
+
          headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true,
+            'Access-Control-Allow-Methods': 'Delete',
          },
       })
          .then((response) => {
@@ -29,7 +32,7 @@ const ProfileView = ({ user, token, favoritesMovies, toggleFavoritesMovies }) =>
             console.log(error);
          });
    };
-   
+
    return (
       <Fragment>
          <Row className="justify-content-center  mt-4 ">

@@ -36,6 +36,10 @@ const MainView = () => {
          headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true,
+            'Access-Control-Allow-Methods': 'POST',
          },
       })
          .then((response) => response.json())
@@ -48,6 +52,10 @@ const MainView = () => {
          headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true,
+            'Access-Control-Allow-Methods': 'Delete',
          },
       })
          .then((response) => response.json())
@@ -59,9 +67,13 @@ const MainView = () => {
 
       const headers = {
          Authorization: `Bearer ${token}`,
+         'Access-Control-Allow-Headers': '*',
+         'Access-Control-Allow-Origin': '*',
+         'Access-Control-Allow-Credentials': true,
+         'Access-Control-Allow-Methods': 'GET',
       };
       const getUser = () => {
-         fetch(`${API}/users/${user.Username}`, { method: 'GET', mode: 'no-cors', headers })
+         fetch(`${API}/users/${user.Username}`, { method: 'GET', headers })
             .then((response) => response.json())
             .then(({ data: user }) => {
                const result = user.FavoriteMovies.map((element) => {
@@ -85,7 +97,7 @@ const MainView = () => {
       const fetchMovies = () => {
          favoritesMovies;
          fetch(`${API}/movies/`, {
-            headers
+            headers,
          })
             .then((response) => response.json())
             .then(({ data }) => {

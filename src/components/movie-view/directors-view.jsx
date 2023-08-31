@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Card } from 'react-bootstrap';
 
 const DirectorView = ({ name, biography }) => {
-   return(
+   return (
       <Fragment>
          <div>
             <h5>{name}</h5>

@@ -28,6 +28,10 @@ const SignupView = () => {
          body: JSON.stringify(data),
          headers: {
             'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true,
+            'Access-Control-Allow-Methods': 'POST',
          },
       }).then((response) => {
          if (response.ok) {
@@ -105,11 +109,7 @@ const SignupView = () => {
 
             <Form.Group className="mb-3">
                <Form.Label> Birthday:</Form.Label>
-               <Form.Control
-                  type="date"
-                  value={birthday}
-                  onChange={(e) => setBirthday(e.target.value)}
-               ></Form.Control>
+               <Form.Control type="date" value={birthday} onChange={(e) => setBirthday(e.target.value)}></Form.Control>
             </Form.Group>
             <Button variant="primary" className="my3 w-100" type="submit">
                Submit
