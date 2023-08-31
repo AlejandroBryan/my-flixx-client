@@ -33,7 +33,6 @@ const MainView = () => {
    const addFavoritesMovies = (movie) => {
       fetch(`${API}/users/${user.Username}/movies/${movie.id}`, {
          method: 'POST',
-         mode: 'cors',
          credentials: 'include',
          headers: {
             Authorization: `Bearer ${token}`,
