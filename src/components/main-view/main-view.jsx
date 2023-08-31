@@ -33,13 +33,11 @@ const MainView = () => {
    const addFavoritesMovies = (movie) => {
       fetch(`${API}/users/${user.Username}/movies/${movie.id}`, {
          method: 'POST',
+         mode: 'cors',
+         credentials: 'include',
          headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Headers': '*',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': true,
-            'Access-Control-Allow-Methods': 'POST',
          },
       })
          .then((response) => response.json())
@@ -49,13 +47,9 @@ const MainView = () => {
    const deleteFavoritesMovies = (movie) => {
       fetch(`${API}/users/${user.Username}/movies/${movie.id}`, {
          method: 'Delete',
+         credentials: 'include',
          headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Headers': '*',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': true,
-            'Access-Control-Allow-Methods': 'Delete',
          },
       })
          .then((response) => response.json())
@@ -67,10 +61,6 @@ const MainView = () => {
 
       const headers = {
          Authorization: `Bearer ${token}`,
-         'Access-Control-Allow-Headers': '*',
-         'Access-Control-Allow-Origin': '*',
-         'Access-Control-Allow-Credentials': true,
-         'Access-Control-Allow-Methods': 'GET',
       };
       const getUser = () => {
          fetch(`${API}/users/${user.Username}`, { method: 'GET', headers })

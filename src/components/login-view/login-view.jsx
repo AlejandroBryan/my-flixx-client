@@ -17,6 +17,8 @@ const LoginView = ({ onLoggedIn }) => {
 
       fetch(`${API}/users/login`, {
          method: 'POST',
+         mode: 'cors',
+         credentials: 'include',
          headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Headers': '*',

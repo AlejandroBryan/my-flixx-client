@@ -9,14 +9,12 @@ const ProfileView = ({ user, token, favoritesMovies, toggleFavoritesMovies }) =>
    const handleDelete = () => {
       fetch(`https://myflixx.herokuapp.com/api/v1/users/${user.Username}`, {
          method: 'DELETE',
+         mode: 'cors',
+         credentials: 'include',
 
          headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Headers': '*',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': true,
-            'Access-Control-Allow-Methods': 'Delete',
          },
       })
          .then((response) => {
