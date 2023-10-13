@@ -25,7 +25,6 @@ const SignupView = () => {
 
       fetch(`${API}/users/register`, {
          method: 'POST',
-         credentials: 'include',
          body: JSON.stringify(data),
          headers: {
             'Content-Type': 'application/json',
@@ -35,10 +34,10 @@ const SignupView = () => {
             alert('Successfully registered');
             redirect('/');
             window.location.reload();
-         } else {
-            alert('Failed to register');
+         } else{
+            alert('something went wrong');
          }
-      });
+      }).catch((err) => alert(err.message));
    };
 
    return (

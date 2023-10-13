@@ -24,16 +24,16 @@ const LoginView = ({ onLoggedIn }) => {
          body: JSON.stringify(data),
       })
          .then((response) => response.json())
-         .then(({ user, token }) => {
+         .then(({ user, token, message }) => {
             if (user) {
                localStorage.setItem('user', JSON.stringify(user));
                localStorage.setItem('token', token);
                onLoggedIn(user, token);
-            } else {
-               alert('Login failed');
+            } else{
+               alert(`${message}`)
             }
          })
-         .catch((error) => alert('Something went wrong', error.message));
+         .catch((message) => alert('Something went wrong', message));
    };
    return (
       <div className="container min-vh-100 d-flex justify-content-center align-items-center">
