@@ -9,6 +9,9 @@ const ProfileView = ({ user, token, favoritesMovies, toggleFavoritesMovies }) =>
       const handleDelete = () => {
       fetch(`${API}/users/${user.Username}`, {
          method: 'DELETE',
+         mode: 'cors',
+         credentials: 'include',
+
          headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -27,6 +30,7 @@ const ProfileView = ({ user, token, favoritesMovies, toggleFavoritesMovies }) =>
             console.log(error);
          });
    };
+   
    return (
       <Fragment>
          <Row className="justify-content-center  mt-4 ">

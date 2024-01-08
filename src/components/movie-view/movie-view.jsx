@@ -15,9 +15,9 @@ const MovieView = ({ movies, favoritesMovies, toggleFavoritesMovies }) => {
    const handleToggle = () => {
       toggleFavoritesMovies(movie);
    };
-   console.log(movie.director.forEach((dir)=> dir))
+
    return (
-      <Row className='my-4'>
+      <Row className="my-4">
          <Col md={4} className="mt-5">
             <Image src={movie.image} alt={movie.title} fluid />
             <Link to={`/`}>
@@ -57,9 +57,7 @@ const MovieView = ({ movies, favoritesMovies, toggleFavoritesMovies }) => {
                      </span>
                      {movie.description}
                   </Card.Text>
-                  {(movie.director.length > 1) ? 
-                  <h3 className="mt-4">Directors</h3>:
-                   <h3 className="mt-4">Director</h3>}
+                  {movie.director.length > 1 ? <h3 className="mt-4">Directors</h3> : <h3 className="mt-4">Director</h3>}
                   {movie.director.map((director) => (
                      <DirectorView name={director.Name} biography={director.Biography} />
                   ))}

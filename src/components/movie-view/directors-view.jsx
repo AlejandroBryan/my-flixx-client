@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 
 const DirectorView = ({ name, biography }) => {
-   return(
+   return (
       <Fragment>
          <div>
             <h5>{name}</h5>

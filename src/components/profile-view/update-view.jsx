@@ -23,6 +23,8 @@ const UpdateView = ({ user, token }) => {
 
       fetch(`https://myflixx.herokuapp.com/api/v1/users/${user.Username}`, {
          method: 'PUT',
+         credentials: 'include',
+
          body: JSON.stringify(data),
          headers: {
             Authorization: `Bearer ${token}`,

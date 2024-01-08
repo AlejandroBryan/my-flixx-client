@@ -33,6 +33,7 @@ const MainView = () => {
    const addFavoritesMovies = (movie) => {
       fetch(`${API}/users/${user.Username}/movies/${movie.id}`, {
          method: 'POST',
+         credentials: 'include',
          headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -45,9 +46,9 @@ const MainView = () => {
    const deleteFavoritesMovies = (movie) => {
       fetch(`${API}/users/${user.Username}/movies/${movie.id}`, {
          method: 'Delete',
+         credentials: 'include',
          headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
          },
       })
          .then((response) => response.json())
@@ -84,7 +85,9 @@ const MainView = () => {
 
       const fetchMovies = () => {
          favoritesMovies;
-         fetch(`${API}/movies/`, { headers })
+         fetch(`${API}/movies/`, {
+            headers,
+         })
             .then((response) => response.json())
             .then(({ data }) => {
                const result = data.map((element) => {

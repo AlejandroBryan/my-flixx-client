@@ -34,10 +34,10 @@ const SignupView = () => {
             alert('Successfully registered');
             redirect('/');
             window.location.reload();
-         } else {
-            alert('Failed to register');
+         } else{
+            alert('something went wrong');
          }
-      });
+      }).catch((err) => alert(err.message));
    };
 
    return (
@@ -105,12 +105,7 @@ const SignupView = () => {
 
             <Form.Group className="mb-3">
                <Form.Label> Birthday:</Form.Label>
-               <Form.Control
-                  type="date"
-                  value={birthday}
-                  onChange={(e) => setBirthday(e.target.value)}
-                  required
-               ></Form.Control>
+               <Form.Control type="date" value={birthday} onChange={(e) => setBirthday(e.target.value)}></Form.Control>
             </Form.Group>
             <Button variant="primary" className="my3 w-100" type="submit">
                Submit
